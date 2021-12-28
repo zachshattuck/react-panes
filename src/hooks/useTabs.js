@@ -61,6 +61,7 @@ export const paneState = React.createContext(initialPaneState)
    */
   const addTabToNewPane = (component, title = "New Tab") => {
     addPane([{title, content: component}])
+    focusPane(panes.length)
   }
 
   //TODO:
