@@ -1,0 +1,91 @@
+div.tabView {
+  width: 100vw;
+  height: 100%;
+  min-height: calc(100vh - 35px);
+
+  display: flex;
+
+
+  >div.pane {
+
+    flex-basis: 100%;
+    //Borders in between tabs
+    &:not(:last-child) {
+        border-right: 2px solid rgb(100, 100, 100);
+    }
+    //Color the focused tab
+    &.focused>div.topBar {
+      background-color: rgb(100, 100, 150);
+    }
+
+    >div.topBar {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-color: rgb(100, 100, 100);
+      height: 25px;
+      display: flex;
+      align-items: center;
+      >div.tabButton {
+        &:not(:last-child) {
+          border-right: 1px solid rgb(200, 200, 200);
+        }
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 25px;
+        width: 70px;
+        background-color: white;
+        &:not(.active) {
+          background-color: rgb(220, 220, 220);
+          cursor: pointer;
+        }
+        font-size: 12px;
+        padding: 0 10px;
+        >span.title {
+          width: 75%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        >div.closeButton {
+          >svg {
+            font-size: 12px;
+          }
+          width: 12px;
+          height: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 3px;
+          cursor: pointer;
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+      >div.paneCloseButton {
+        margin-left: auto;
+        margin-right: 10px;
+        >svg {
+          font-size: 12px;
+          color: white;
+        }
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+    >div.tab {
+      
+    }
+  }
+}
