@@ -6,8 +6,9 @@ module.exports = {
     output: {
       path: path.resolve(__dirname, 'lib'),
       filename: "index.js",
-      library: pkg.name,
-      libraryTarget: "commonjs"
+    },
+    resolve: {
+      extensions: ['', '.js', '.jsx'],
     },
     module: {
       rules: [
@@ -25,6 +26,15 @@ module.exports = {
         {
           test: /\.s[ac]ss$/i,
           use: ["style-loader", "css-loader", "sass-loader"]
+        },
+        {
+          test: /\.(png|jpg|gif)$/i,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
         },
       ]
     }
