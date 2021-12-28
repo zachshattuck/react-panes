@@ -6,9 +6,8 @@
 import { TabSystemProvider, TabView, useTabFunctions } from 'react-panes'
 
 <TabSystemProvider>
- ...
+ //Header..? etc...
  <TabView />
- ...
 </TabSystemProvider>
 `
 
