@@ -1,0 +1,22 @@
+{
+  "name": "react-panes",
+  "version": "1.0.0",
+  "description": "A very simple panes-and-tabs system for React.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "js",
+    "react-js",
+    "tabs",
+    "panes"
+  ],
+  "author": "Zach Shattuck",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
+  }
+}
