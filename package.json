@@ -15,8 +15,14 @@
   ],
   "author": "Zach Shattuck",
   "license": "ISC",
+  "devDependencies": {
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0",
+    "sass": "^1.45.0"
+  },
   "peerDependencies": {
     "react": ">=16.14.0",
-    "react-dom": ">=16.14.0"
+    "react-dom": ">=16.14.0",
+    "sass": "^1.45.0"
   }
 }
