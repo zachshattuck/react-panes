@@ -10,8 +10,7 @@ import { paneState, topState } from "../hooks/useTabs"
  */
  export const PaneStateProvider = ({id, children}) => {
 
-  //Need to actually worrk wuth top-level state. move these functgions up with a (paneId, tabId)
-  const { panes, addPane, removePane, focusedPane, focusPane, addTab, removeTab, setActiveTab } = useContext(topState)
+  const { panes, addTab, removeTab, setActiveTab } = useContext(topState)
   const tabs = panes[id].tabs
   const activeTab = panes[id].activeTab
 

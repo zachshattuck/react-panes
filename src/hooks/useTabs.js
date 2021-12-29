@@ -14,7 +14,9 @@ const initialState = {
   focusedPane: 0,
   focusPane: () => {},
   addTab: () => {},
-  removeTab: () => {}
+  removeTab: () => {},
+  moveTab: () => {},
+  moveTabBetweenPanes: () => {},
 }
 export const topState = React.createContext(initialState)
 
@@ -36,7 +38,7 @@ export const paneState = React.createContext(initialPaneState)
  */
  export const useTabFunctions = () => {
   //Top-level stuff
-  const {addTab, panes, addPane, focusedPane, setActiveTab} = useContext(topState)
+  const {addTab, panes, addPane, focusedPane, focusPane, setActiveTab} = useContext(topState)
   /**
    * Adds a tab to the currently focused Pane.
    * @param {*} component 
