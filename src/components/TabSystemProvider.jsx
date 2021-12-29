@@ -110,17 +110,20 @@ import { topState } from "../hooks/useTabs"
         //Right after the source pane right up until the destination pane
         ...panes.slice(sourcePaneId + 1, destinationPaneId),
 
-        //Copy of the destination pane with the source tab appended onto its tab list or inserted appropriately
+        //Copy of the destination pane with the source tab appended onto its tab list or inserted appropriately, and focus the new tab
         {
           ...panes[destinationPaneId],
-          //Is there a destionation pane specified?
+          //Is there a destination tab specified?
           tabs: destinationTabId !== null ? [
-            ...panes[destinationPaneId].tabs.slice(0, destinationTabId + 1),
+            ...panes[destinationPaneId].tabs.slice(0, destinationTabId),
             panes[sourcePaneId].tabs[sourceTabId],
-            ...panes[destinationPaneId].tabs.slice(destinationTabId + 1)           
+            ...panes[destinationPaneId].tabs.slice(destinationTabId)           
           ]
           //Otherwise, just pop it in at the end   
-          : [...panes[destinationPaneId].tabs, panes[sourcePaneId].tabs[sourceTabId]]
+          : [...panes[destinationPaneId].tabs, panes[sourcePaneId].tabs[sourceTabId]],
+
+          //not length - 1, because the destination does not technically have the tab yet
+          activeTab: destinationTabId !== null ? destinationTabId : panes[destinationPaneId].tabs.length,
         },
 
         //Right after the destionation pane onward
@@ -133,17 +136,20 @@ import { topState } from "../hooks/useTabs"
         //Right up until the destination pane...
         ...panes.slice(0, destinationPaneId), 
 
-        //Copy of the destination pane with the source tab appended onto its tab list or inserted appropriately
+        //Copy of the destination pane with the source tab appended onto its tab list or inserted appropriately, and focus the new tab
         {
           ...panes[destinationPaneId],
-          //Is there a destionation pane specified?
+          //Is there a destination tab specified?
           tabs: destinationTabId !== null ? [
-            ...panes[destinationPaneId].tabs.slice(0, destinationTabId + 1),
+            ...panes[destinationPaneId].tabs.slice(0, destinationTabId),
             panes[sourcePaneId].tabs[sourceTabId],
-            ...panes[destinationPaneId].tabs.slice(destinationTabId + 1)                  
+            ...panes[destinationPaneId].tabs.slice(destinationTabId)                  
           ]
           //Otherwise, just pop it in at the end   
-          : [...panes[destinationPaneId].tabs, panes[sourcePaneId].tabs[sourceTabId]]
+          : [...panes[destinationPaneId].tabs, panes[sourcePaneId].tabs[sourceTabId]],
+
+          //not length - 1, because the destination does not technically have the tab yet
+          activeTab: destinationTabId !== null ? destinationTabId : panes[destinationPaneId].tabs.length,
         },
 
         //Right after the destination pane up until the source pane...
@@ -165,7 +171,43 @@ import { topState } from "../hooks/useTabs"
 
     }
   }
-  const moveTab = (paneId, originalIndex, newIndex = null) => {
+  const moveTab = (paneId, originalIndex, newIndex) => {
+
+    if(newIndex > originalIndex) {
+
+      setPanes([
+        ...panes.slice(0, paneId),
+        {
+          ...panes[paneId],
+          tabs: [
+            ...panes[paneId].tabs.slice(0, originalIndex),
+            ...panes[paneId].tabs.slice(originalIndex + 1, newIndex),
+            panes[paneId].tabs[originalIndex],
+            ...panes[paneId].tabs.slice(newIndex)
+          ],
+          activeTab: newIndex < panes[paneId].tabs.length ? newIndex : panes[paneId].tabs.length - 1
+        },
+        ...panes.slice(paneId + 1),
+      ])
+
+    } else {
+
+      setPanes([
+        ...panes.slice(0, paneId),
+        {
+          ...panes[paneId],
+          tabs: [
+            ...panes[paneId].tabs.slice(0, newIndex),
+            panes[paneId].tabs[originalIndex],
+            ...panes[paneId].tabs.slice(newIndex, originalIndex),
+            ...panes[paneId].tabs.slice(originalIndex + 1)
+          ],
+          activeTab: newIndex < panes[paneId].tabs.length ? newIndex : panes[paneId].tabs.length - 1
+        },
+        ...panes.slice(paneId + 1),
+      ])
+
+    }
 
   }
 

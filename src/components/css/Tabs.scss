@@ -24,49 +24,54 @@ div.tabView {
       background-color: rgb(100, 100, 100);
       height: 25px;
       display: flex;
-      align-items: center;
-      >div.tabButton {
-        &:not(:last-child) {
-          border-right: 1px solid rgb(200, 200, 200);
-        }
+      justify-content: space-between;
+      >div.tabButtons {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        height: 25px;
-        width: 70px;
-        background-color: white;
-        &:not(.active) {
-          background-color: rgb(220, 220, 220);
-          cursor: pointer;
-        }
-        font-size: 12px;
-        padding: 0 10px;
-        >span.title {
-          width: 75%;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-        >div.closeButton {
-          >svg {
-            font-size: 12px;
-            color: rgb(30, 30, 30);
+        width: calc(100% - 80px);
+        overflow-x: hidden;
+        >div.tabButton {
+          &:not(:last-child) {
+            border-right: 1px solid rgb(200, 200, 200);
           }
-          width: 15px;
-          height: 15px;
           display: flex;
           align-items: center;
-          justify-content: center;
-          border-radius: 3px;
-          cursor: pointer;
-          &:hover {
-            background-color: rgba(0, 0, 0, 0.1);
+          justify-content: space-between;
+          height: 25px;
+          width: 100px;
+          background-color: white;
+          &:not(.active) {
+            background-color: rgb(220, 220, 220);
+            cursor: pointer;
+          }
+          font-size: 12px;
+          padding: 0 10px;
+          >span.title {
+            width: 75%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          >div.closeButton {
+            >svg {
+              font-size: 12px;
+              color: rgb(30, 30, 30);
+            }
+            width: 15px;
+            height: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            cursor: pointer;
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.1);
+            }
           }
         }
       }
       >div.paneControls {
         height: 100%;
-        margin-left: auto;
         display: flex;
         >div {
           width: 35px;
@@ -74,7 +79,6 @@ div.tabView {
           display: flex;
           align-items: center;
           justify-content: center;
-          // border-radius: 3px;
           cursor: pointer;
           &:hover {
             background-color: rgba(0, 0, 0, 0.1);
