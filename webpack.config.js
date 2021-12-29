@@ -1,17 +1,25 @@
 const path = require('path');
-const pkg = require('./package.json');
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
     entry: "./src/index.js",
+    target: 'node',
+    externals: [nodeExternals()],
     output: {
       path: path.resolve(__dirname, 'lib'),
       filename: "index.js",
+      libraryTarget: 'umd',
     },
     resolve: {
       extensions: ['', '.js', '.jsx'],
       alias: {
         react: path.resolve('./node_modules/react')
       }
+    },
+    externals: {
+      // Use external version of React and React DOM
+      'react': 'react',
+      'react-dom': 'react-dom'
     },
     module: {
       rules: [

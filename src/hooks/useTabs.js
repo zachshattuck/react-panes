@@ -9,6 +9,7 @@ import '../components/css/Tabs.scss'
 
 const initialState = {
   panes: [], //Array of arrays of tabs
+  paneWidths: [],
   addPane: () => {},
   addPaneAfter: () => {},
   removePane: () => {},

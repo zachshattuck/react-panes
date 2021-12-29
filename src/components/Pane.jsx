@@ -1,6 +1,6 @@
 import { Add, Close } from "@material-ui/icons"
 import React, { useContext } from "react"
-import { paneState, topState, Tab } from "../hooks/useTabs"
+import { paneState, topState } from "../hooks/useTabs"
 
 /**
  * Only used by useTabs.
@@ -89,7 +89,7 @@ export const Pane = () => {
       </div>
     </div>
     {tabs?.length > 0 ?
-      tabs[activeTab]?.content? <Tab content={tabs[activeTab].content} /> : <></>
+      tabs[activeTab]?.content ? <div className="content">{tabs[activeTab].content}</div> : <></>
     : <></>}
   </div>)
 

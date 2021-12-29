@@ -12,8 +12,8 @@ import { topState } from "../hooks/useTabs"
   const [panes, setPanes] = useState([{
     tabs: initialTabs,
     activeTab: 0,
-    width: 100,
   }])
+  const [paneWidths, setPaneWidths] = useState([100])
   //Idea: list of the components seperately, with a tab ID and pane ID field.
   //Moving tabs around erases their state :(
   // const [components, setComponents] = useState([])
@@ -211,7 +211,7 @@ import { topState } from "../hooks/useTabs"
 
   }
 
-  return <topState.Provider value={{ panes, addPane, addPaneAfter, removePane, focusedPane, focusPane, addTab, removeTab, setActiveTab, moveTab, moveTabBetweenPanes}}>
+  return <topState.Provider value={{ panes, paneWidths, addPane, addPaneAfter, removePane, focusedPane, focusPane, addTab, removeTab, setActiveTab, moveTab, moveTabBetweenPanes}}>
     {children}
   </topState.Provider>
 }
