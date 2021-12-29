@@ -1,4 +1,4 @@
-import { Close } from "@material-ui/icons"
+import { Add, Close } from "@material-ui/icons"
 import React, { useContext } from "react"
 import { paneState, topState, Tab } from "../hooks/useTabs"
 
@@ -9,7 +9,7 @@ import { paneState, topState, Tab } from "../hooks/useTabs"
 export const Pane = () => {
 
   const {id, tabs, addTab, removeTab, activeTab, setActiveTab} = useContext(paneState)
-  const {removePane, focusedPane, focusPane, moveTab, moveTabBetweenPanes} = useContext(topState)
+  const {addPaneAfter, removePane, focusedPane, focusPane, moveTab, moveTabBetweenPanes} = useContext(topState)
   
   const handleClose = (e, i) => {
     e.stopPropagation()
@@ -19,6 +19,10 @@ export const Pane = () => {
     setActiveTab(i)
   }
 
+  const handlePaneAdd = e => {
+    e.stopPropagation()
+    addPaneAfter(id, [])
+  }
   const handlePaneClose = (e) => {
     e.stopPropagation()
     removePane(id)
@@ -69,8 +73,9 @@ export const Pane = () => {
         </div>
       )}
 
-      <div className="paneCloseButton" onClick={handlePaneClose}>
-        <Close />
+      <div className="paneControls">
+        <div className="paneAddButton" onClick={handlePaneAdd}>     <Add /> </div>
+        <div className="paneCloseButton" onClick={handlePaneClose}> <Close /> </div>
       </div>
     </div>
     {tabs?.length > 0 ?

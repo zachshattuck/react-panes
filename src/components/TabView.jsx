@@ -6,7 +6,7 @@ import { topState, Pane, PaneStateProvider } from "../hooks/useTabs"
  * @returns 
  */
  export const TabView = () => {
-  const {panes, addPane, removePane, focusedPane, focusPane} = useContext(topState)
+  const { panes } = useContext(topState)
   return(<div className="tabView">
 
     {panes.map((pane, i) => 

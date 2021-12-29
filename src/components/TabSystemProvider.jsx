@@ -8,7 +8,7 @@ import { topState } from "../hooks/useTabs"
  * @param {*} props.children
  * @returns 
  */
- export const TabSystemProvider = ({initialTabs, children}) => {  
+ export const TabSystemProvider = ({initialTabs = [], children}) => {  
   const [panes, setPanes] = useState([{
     tabs: initialTabs,
     activeTab: 0,
@@ -27,6 +27,16 @@ import { topState } from "../hooks/useTabs"
       tabs: initialTabs,
       activeTab: 0
     }])
+  }
+  const addPaneAfter = (paneId, initialTabs) => {
+    setPanes(cv => [
+      ...cv.slice(0, paneId + 1), 
+      {
+        tabs: initialTabs,
+        activeTab: 0
+      },
+      ...cv.slice(paneId + 1)
+    ])
   }
   const removePane = paneId => {
     //Make sure to never have zero panes
@@ -159,7 +169,7 @@ import { topState } from "../hooks/useTabs"
 
   }
 
-  return <topState.Provider value={{ panes, addPane, removePane, focusedPane, focusPane, addTab, removeTab, setActiveTab, moveTab, moveTabBetweenPanes}}>
+  return <topState.Provider value={{ panes, addPane, addPaneAfter, removePane, focusedPane, focusPane, addTab, removeTab, setActiveTab, moveTab, moveTabBetweenPanes}}>
     {children}
   </topState.Provider>
 }
