@@ -1,5 +1,5 @@
 {
-  "name": "react-panes",
+  "name": "react-tabs-system",
   "version": "1.0.0",
   "description": "A very simple panes-and-tabs system for React.",
   "main": "lib/index.js",

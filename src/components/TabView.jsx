@@ -11,7 +11,7 @@ import { topState, Pane, PaneStateProvider } from "../hooks/useTabs"
 
     {panes.map((pane, i) => 
       <PaneStateProvider key={i} id={i}>
-        <Pane />
+        <Pane width={100/panes.length} />
       </PaneStateProvider>
     )}
 

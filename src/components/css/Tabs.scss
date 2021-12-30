@@ -1,5 +1,7 @@
 div.tabView {
   display: flex;
+  height: calc(100vh - 40px);
+  margin-top: 40px;
 
   >div.pane {
 
@@ -22,6 +24,7 @@ div.tabView {
       -ms-user-select: none;
       user-select: none;
       background-color: rgb(100, 100, 100);
+      // box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
       height: 25px;
       display: flex;
       justify-content: space-between;
@@ -90,9 +93,11 @@ div.tabView {
         }
       }
     }
-    >div.tab {
+    >div.content {
+      background-color: white;
       height: calc(100% - 25px);
       overflow-y: auto;
+      overflow-x: auto;
     }
   }
 }

@@ -6,7 +6,7 @@ import { paneState, topState } from "../hooks/useTabs"
  * Only used by useTabs.
  * @returns 
  */
-export const Pane = () => {
+export const Pane = ({width = 100}) => {
 
   const {id, tabs, removeTab, activeTab, setActiveTab} = useContext(paneState)
   const {addPaneAfter, removePane, focusedPane, focusPane, moveTab, moveTabBetweenPanes} = useContext(topState)
@@ -72,7 +72,7 @@ export const Pane = () => {
     console.log("pane drag")
   }
 
-  return (<div key={id} className={`pane ${focusedPane === id && 'focused'}`} onClick={() => focusPane(id)} >
+  return (<div key={id} className={`pane ${focusedPane === id && 'focused'}`} onClick={() => focusPane(id)} style={{width: `${width}%`}} >
     <div className="topBar" onDrop={handleEndDrop} onDragOver={handlePaneDrag}>
       <div className="tabButtons">
         {tabs?.map((tab, i) => 
