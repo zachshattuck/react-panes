@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { topState } from "../hooks/useTabs"
+import { v4 } from "uuid"
 
 /**
  * Context provider placed at the very top-level. Manages panes.
@@ -10,7 +11,7 @@ import { topState } from "../hooks/useTabs"
  */
  export const TabSystemProvider = ({initialTabs = [], children}) => {  
   const [panes, setPanes] = useState([{
-    tabs: initialTabs,
+    tabs: initialTabs.map(tab => ({...tab, key: v4() })),
     activeTab: 0,
   }])
   const [paneWidths, setPaneWidths] = useState([100])
@@ -56,7 +57,7 @@ import { topState } from "../hooks/useTabs"
 
     setPanes(cv => [
       ...cv.slice(0, paneId), 
-      { ...cv[paneId], tabs: [...cv[paneId].tabs, tabObject] }, 
+      { ...cv[paneId], tabs: [...cv[paneId].tabs, {...tabObject, key: v4()}] }, 
       ...cv.slice(paneId + 1)
     ])
   }

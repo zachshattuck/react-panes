@@ -65,11 +65,9 @@ export const Pane = ({width = 100}) => {
   const handleTabDrag = e => {
     e.preventDefault()
     e.stopPropagation()
-    console.log("tab hover")
   }
   const handlePaneDrag = e => {
     e.preventDefault()
-    console.log("pane drag")
   }
 
   return (<div key={id} className={`pane ${focusedPane === id && 'focused'}`} onClick={() => focusPane(id)} style={{width: `${width}%`}} >
@@ -89,7 +87,7 @@ export const Pane = ({width = 100}) => {
       </div>
     </div>
     {tabs?.length > 0 ?
-      tabs.map((tab, i) => <Tab content={tab.content} visible={i === activeTab} />)
+      tabs.map((tab, i) => <Tab key={tab.key} content={tab.content} visible={i === activeTab} />)
     : <></>}
   </div>)
 

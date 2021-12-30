@@ -94,9 +94,9 @@ div.tabView {
     >div.tabContent {
       background-color: white;
       height: calc(100% - 25px);
+      width: 100%;
       overflow-y: auto;
       overflow-x: auto;
-      
       display: none;
       &.visible {
         display: unset;
