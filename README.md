@@ -1,4 +1,4 @@
-# react-panes
+# react-tabs-system
 A super easy-to-use tabs-and-panes system for React >= 16.14.0 
 ### Usage:
 
