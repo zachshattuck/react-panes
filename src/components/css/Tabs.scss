@@ -99,7 +99,7 @@ div.tabView {
       overflow-x: auto;
       display: none;
       &.visible {
-        display: unset;
+        display: block;
       }
     }
   }
