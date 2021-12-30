@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals')
+const pkg = require('./package.json')
 
 module.exports = {
     entry: "./src/index.js",
@@ -34,10 +35,10 @@ module.exports = {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"]
         },
-        {
-          test: /\.s[ac]ss$/i,
-          use: ["style-loader", "css-loader", "sass-loader"]
-        },
+        // {
+        //   test: /\.s[ac]ss$/i,
+        //   use: ["style-loader", "css-loader", "sass-loader"]
+        // },
         {
           test: /\.(png|jpg|gif)$/i,
           use: {
