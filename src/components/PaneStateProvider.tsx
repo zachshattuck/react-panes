@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useContext } from "react"
+import React, { ReactNode, useCallback, useContext } from "react"
 import { paneState, topState } from "../hooks/useTabs"
 import { TabType } from "../types"
 

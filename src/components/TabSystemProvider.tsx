@@ -1,4 +1,4 @@
-import { useState, ReactNode } from "react"
+import React, { useState, ReactNode } from "react"
 import { v4 } from "uuid"
 
 import { topState } from "../hooks/useTabs"
