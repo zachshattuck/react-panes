@@ -1,7 +1,5 @@
 div.tabView {
   display: flex;
-  height: calc(100vh - 40px);
-  margin-top: 40px;
 
   >div.pane {
 
@@ -93,11 +91,16 @@ div.tabView {
         }
       }
     }
-    >div.content {
+    >div.tabContent {
       background-color: white;
       height: calc(100% - 25px);
       overflow-y: auto;
       overflow-x: auto;
+      
+      display: none;
+      &.visible {
+        display: unset;
+      }
     }
   }
 }

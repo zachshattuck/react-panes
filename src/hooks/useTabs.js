@@ -76,7 +76,7 @@ export const paneState = React.createContext(initialPaneState)
   return { addTab: addNewTab, addTabAndFocus, addTabToNewPane}
 }
 
-// export * from '../components/Tab'
+export { default as Tab } from '../components/Tab'
 export { default as TabSystemProvider } from '../components/TabSystemProvider'
 export { default as Pane } from '../components/Pane'
 export { default as PaneStateProvider } from '../components/PaneStateProvider'
