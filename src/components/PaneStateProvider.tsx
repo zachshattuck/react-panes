@@ -1,5 +1,6 @@
-import React, { useContext } from "react"
+import React, { ReactNode, useCallback, useContext } from "react"
 import { paneState, topState } from "../hooks/useTabs"
+import { TabType } from "../types"
 
 /**
  * Context provider for Panes. Manages tabs.
@@ -8,24 +9,29 @@ import { paneState, topState } from "../hooks/useTabs"
  * @param {*} props.children
  * @returns 
  */
- export const PaneStateProvider = ({id, children}) => {
+
+export type PaneStateProviderProps = {
+  id: number,
+  children: ReactNode
+}
+export const PaneStateProvider = ({id, children}: PaneStateProviderProps): JSX.Element => {
 
   const { panes, addTab, removeTab, setActiveTab } = useContext(topState)
   const tabs = panes[id].tabs
   const activeTab = panes[id].activeTab
 
-  const paneSetActiveTab = tabId => {
+  const paneSetActiveTab = (tabId: number) => {
     setActiveTab(id, tabId)
   }
-  const paneAddTab = tabObject => {
+  const paneAddTab = (tabObject: TabType) => {
     addTab(id, tabObject)
   }
-  const paneRemoveTab = i => {
+  const paneRemoveTab = useCallback((i: number) => {
     if(activeTab === tabs.length - 1) {
-      setActiveTab(cv => (cv - 1 >= 0 ? cv - 1 : 0) )
+      paneSetActiveTab(activeTab - 1 >= 0 ? activeTab - 1 : 0)
     }
     removeTab(id, i)
-  }
+  }, [activeTab, paneAddTab])
 
   return <paneState.Provider value={{id, tabs, addTab: paneAddTab, removeTab: paneRemoveTab, activeTab, setActiveTab: paneSetActiveTab}}>
     {children}

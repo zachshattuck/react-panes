@@ -1,5 +1,22 @@
 import React, { useContext } from "react"
 import '../components/css/Tabs.scss'
+import { TabType, PaneType } from '../types'
+
+export type TabSystemContext = {
+  panes: PaneType[],
+  paneWidths: number[],
+  addPane: (initialTabs: TabType[]) => void
+  addPaneAfter: (id: number, initialTabs: TabType[]) => void
+  removePane: (id: number) => void
+  focusedPane: number
+  focusPane: (id: number) => void
+  addTab: (paneId: number, tab: TabType) => void
+  removeTab: (paneId: number, tabId: number) => void
+  moveTab: (paneId: number, originalIndex: number, newIndex: number) => void
+  moveTabBetweenPanes: (sourcePaneId: number, sourceTabId: number, destinationPaneId: number, destinationTabId?: number) => void
+  setActiveTab: (paneId: number, tabId: number) => void
+}
+
 
 /**
  * How to use the tab system
@@ -19,9 +36,18 @@ const initialState = {
   removeTab: () => {},
   moveTab: () => {},
   moveTabBetweenPanes: () => {},
+  setActiveTab: () => {}
 }
-export const topState = React.createContext(initialState)
+export const topState = React.createContext<TabSystemContext>(initialState)
 
+export type PaneProviderContext = {
+  id: number,
+  tabs: TabType[],
+  addTab: (tab: TabType) => void
+  removeTab: (id: number) => void
+  activeTab: number
+  setActiveTab: (id: number) => void
+}
 
 const initialPaneState = {
   id: 0,
@@ -31,7 +57,7 @@ const initialPaneState = {
   activeTab: 0,
   setActiveTab: () => {},
 }
-export const paneState = React.createContext(initialPaneState)
+export const paneState = React.createContext<PaneProviderContext>(initialPaneState)
 
 
 /**
@@ -46,7 +72,7 @@ export const paneState = React.createContext(initialPaneState)
    * @param {*} component 
    * @param {string} title 
    */
-  const addNewTab = (component, title = "New Tab") => {
+  const addNewTab = (component: JSX.Element, title = "New Tab") => {
     addTab(focusedPane, {title, content: component})
   }
   
@@ -55,7 +81,7 @@ export const paneState = React.createContext(initialPaneState)
    * @param {*} component 
    * @param {string} title 
    */
-  const addTabAndFocus = (component, title = "New Tab") => {
+  const addTabAndFocus = (component: JSX.Element, title = "New Tab") => {
     addTab(focusedPane, {title, content: component})
     setActiveTab(focusedPane, panes[focusedPane].tabs.length)
   }
@@ -63,7 +89,7 @@ export const paneState = React.createContext(initialPaneState)
   /**
    * Adds a new tab to a new Pane
    */
-  const addTabToNewPane = (component, title = "New Tab") => {
+  const addTabToNewPane = (component: JSX.Element, title = "New Tab") => {
     addPane([{title, content: component}])
     focusPane(panes.length)
   }
