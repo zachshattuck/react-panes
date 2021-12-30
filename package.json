@@ -5,10 +5,13 @@
   "main": "lib/index.js",
   "files": [
     "lib/index.js",
+    "lib/index.d.ts",
     "README"
   ],
   "scripts": {
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "generate-types": "tsc --declaration --noEmit false --emitDeclarationOnly --outFile ./lib/index.js --isolatedModules false && node ./fix-types.js",
+    "prepack": "npm run build && npm run generate-types"
   },
   "keywords": [
     "react",
@@ -24,14 +27,17 @@
     "@babel/core": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@types/react": "^17.0.38",
     "babel-loader": "^8.2.3",
     "babel-plugin-transform-scss": "^1.1.0",
     "css-loader": "^6.5.1",
     "sass": "^1.45.1",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
+    "typescript": "^4.5.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
