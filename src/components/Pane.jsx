@@ -89,7 +89,7 @@ export const Pane = ({width = 100}) => {
       </div>
     </div>
     {tabs?.length > 0 ?
-      tabs.map((tab, i) => <Tab content={tab.content} visible={i === activeTab ? true : false} />)
+      tabs.map((tab, i) => <Tab content={tab.content} visible={i === activeTab} />)
     : <></>}
   </div>)
 
