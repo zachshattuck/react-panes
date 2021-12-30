@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { topState, Pane, PaneStateProvider } from "../hooks/useTabs"
 
 /**

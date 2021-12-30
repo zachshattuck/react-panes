@@ -1,6 +1,8 @@
-import React, { useState } from "react"
-import { topState } from "../hooks/useTabs"
+import { useState, ReactNode } from "react"
 import { v4 } from "uuid"
+
+import { topState } from "../hooks/useTabs"
+import { TabType, PaneType, NewTab } from "../types"
 
 /**
  * Context provider placed at the very top-level. Manages panes.
@@ -9,37 +11,38 @@ import { v4 } from "uuid"
  * @param {*} props.children
  * @returns 
  */
- export const TabSystemProvider = ({initialTabs = [], children}) => {  
-  const [panes, setPanes] = useState([{
+ export const TabSystemProvider = ({initialTabs = [], children}: { initialTabs: NewTab[], children: ReactNode }) => {
+
+  const [panes, setPanes] = useState<PaneType[]>([{
     tabs: initialTabs.map(tab => ({...tab, key: v4() })),
     activeTab: 0,
   }])
-  const [paneWidths, setPaneWidths] = useState([100])
+  const [paneWidths, setPaneWidths] = useState<number[]>([100])
   //Idea: list of the components seperately, with a tab ID and pane ID field.
   //Moving tabs around erases their state :(
   // const [components, setComponents] = useState([])
   const [focusedPane, setFocusedPane] = useState(0)
-  const focusPane = id => {
+  const focusPane = (id: number) => {
     setFocusedPane(id)
   }
 
-  const addPane = initialTabs => {
+  const addPane = (initialTabs: NewTab[]) => {
     setPanes(cv => [...cv, {
-      tabs: initialTabs,
+      tabs: initialTabs.map(tab => ({ ...tab, key: v4() })),
       activeTab: 0
     }])
   }
-  const addPaneAfter = (paneId, initialTabs) => {
+  const addPaneAfter = (paneId: number, initialTabs: NewTab[]) => {
     setPanes(cv => [
       ...cv.slice(0, paneId + 1), 
       {
-        tabs: initialTabs,
+        tabs: initialTabs.map(tab => ({ ...tab, key: v4() })),
         activeTab: 0
-      },
+      } as PaneType,
       ...cv.slice(paneId + 1)
     ])
   }
-  const removePane = paneId => {
+  const removePane = (paneId: number) => {
     //Make sure to never have zero panes
     if(panes.length === 1) {
       setPanes([{
@@ -53,22 +56,21 @@ import { v4 } from "uuid"
     setPanes([...panes.slice(0, paneId), ...panes.slice(paneId + 1)])
   }
 
-  const addTab = (paneId, tabObject) => {
-
+  const addTab = (paneId: number, tabObject: NewTab[]) => {
     setPanes(cv => [
       ...cv.slice(0, paneId), 
-      { ...cv[paneId], tabs: [...cv[paneId].tabs, {...tabObject, key: v4()}] }, 
+      { ...cv[paneId], tabs: [...cv[paneId].tabs, {...tabObject, key: v4()}] } as PaneType, 
       ...cv.slice(paneId + 1)
     ])
   }
-  const setActiveTab = (paneId, tabId) => {
+  const setActiveTab = (paneId: number, tabId: number) => {
     setPanes(cv => [
       ...cv.slice(0, paneId), 
       { ...cv[paneId], activeTab: tabId }, 
       ...cv.slice(paneId + 1)
     ])
   }
-  const removeTab = (paneId, tabId) => {
+  const removeTab = (paneId: number, tabId: number) => {
     if(panes[paneId].tabs.length === 1 && panes.length > 1) {
       removePane(paneId)
       return
@@ -83,15 +85,29 @@ import { v4 } from "uuid"
       ...panes.slice(paneId + 1)
     ])
   }
-  const moveTabBetweenPanes = (sourcePaneId, sourceTabId, destinationPaneId, destinationTabId = null) => {
-
-    //Idea: create copies of source and destionation panes with removed items,
-    //And then add the new items,
-    //And then do the if statement.
-    //It should be possible for it not to break when dragging onto the same tab to reorder.
+  const moveTabBetweenPanes = (sourcePaneId: number, sourceTabId: number, destinationPaneId: number, destinationTabId: number = -1) => {
 
     //WARNING: painful React nested array mutations incoming
+    const getNewTabList = (list: TabType[] = panes[destinationPaneId].tabs) => destinationTabId !== -1
+      ? [ ...list.slice(0, destinationTabId), panes[sourcePaneId].tabs[sourceTabId], ...list.slice(destinationTabId) ] 
+      : [ ...list, panes[sourcePaneId].tabs[sourceTabId]]
 
+      // type PaneJoinTable = {
+      //   tabId: string// uuid,
+      //   paneIndex: number,
+      //   tabIndex: number
+      // }
+      // type TabNew = {
+      //   title: string,
+      //   content: JSX.Element
+      // }
+
+      // // pane hash
+
+      // type State = {
+      //   tabs: { [key: string]: TabNew }
+      // }
+      
     if(sourcePaneId < destinationPaneId) {
 
       setPanes([
@@ -115,16 +131,9 @@ import { v4 } from "uuid"
         {
           ...panes[destinationPaneId],
           //Is there a destination tab specified?
-          tabs: destinationTabId !== null ? [
-            ...panes[destinationPaneId].tabs.slice(0, destinationTabId),
-            panes[sourcePaneId].tabs[sourceTabId],
-            ...panes[destinationPaneId].tabs.slice(destinationTabId)           
-          ]
-          //Otherwise, just pop it in at the end   
-          : [...panes[destinationPaneId].tabs, panes[sourcePaneId].tabs[sourceTabId]],
-
+          tabs: getNewTabList(),
           //not length - 1, because the destination does not technically have the tab yet
-          activeTab: destinationTabId !== null ? destinationTabId : panes[destinationPaneId].tabs.length,
+          activeTab: destinationTabId !== -1 ? destinationTabId : panes[destinationPaneId].tabs.length,
         },
 
         //Right after the destionation pane onward
@@ -141,7 +150,7 @@ import { v4 } from "uuid"
         {
           ...panes[destinationPaneId],
           //Is there a destination tab specified?
-          tabs: destinationTabId !== null ? [
+          tabs: destinationTabId !== -1 ? [
             ...panes[destinationPaneId].tabs.slice(0, destinationTabId),
             panes[sourcePaneId].tabs[sourceTabId],
             ...panes[destinationPaneId].tabs.slice(destinationTabId)                  
@@ -150,7 +159,7 @@ import { v4 } from "uuid"
           : [...panes[destinationPaneId].tabs, panes[sourcePaneId].tabs[sourceTabId]],
 
           //not length - 1, because the destination does not technically have the tab yet
-          activeTab: destinationTabId !== null ? destinationTabId : panes[destinationPaneId].tabs.length,
+          activeTab: destinationTabId !== -1 ? destinationTabId : panes[destinationPaneId].tabs.length,
         },
 
         //Right after the destination pane up until the source pane...
@@ -172,7 +181,7 @@ import { v4 } from "uuid"
 
     }
   }
-  const moveTab = (paneId, originalIndex, newIndex) => {
+  const moveTab = (paneId: number, originalIndex: number, newIndex: number) => {
 
     if(newIndex > originalIndex) {
 

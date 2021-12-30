@@ -1,5 +1,3 @@
-import React from 'react'
-
 export type TabProps = {
   content: JSX.Element,
   visible?: boolean

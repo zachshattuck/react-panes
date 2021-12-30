@@ -1,16 +1,16 @@
 import React, { useContext } from "react"
 import '../components/css/Tabs.scss'
-import { TabType, PaneType } from '../types'
+import { TabType, PaneType, NewTab } from '../types'
 
 export type TabSystemContext = {
   panes: PaneType[],
   paneWidths: number[],
-  addPane: (initialTabs: TabType[]) => void
+  addPane: (initialTabs: NewTab[]) => void
   addPaneAfter: (id: number, initialTabs: TabType[]) => void
   removePane: (id: number) => void
   focusedPane: number
   focusPane: (id: number) => void
-  addTab: (paneId: number, tab: TabType) => void
+  addTab: (paneId: number, tab: NewTab) => void
   removeTab: (paneId: number, tabId: number) => void
   moveTab: (paneId: number, originalIndex: number, newIndex: number) => void
   moveTabBetweenPanes: (sourcePaneId: number, sourceTabId: number, destinationPaneId: number, destinationTabId?: number) => void
