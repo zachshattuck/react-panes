@@ -16,13 +16,13 @@ You can drag and drop tabs to reorder them. It currently destroys the state but 
 ### Styling:
 If you wanna change the styling, the CSS class layout looks like this:
 
-`div.tabView`
-`->div.pane`
-`-->div.topBar`
-`--->div.tabButtons`
-`---->div.tabButton`
-`----->span.title`
-`----->div.closeButton`
-`---->div.paneControls`
-`----->div (the buttons themselves)`
-`-->div.tabContent (has the class 'visible' if it is active)`
+`div.tabView`  
+`- >div.pane`  
+`- - >div.topBar`  
+`- - - >div.tabButtons`  
+`- - - - >div.tabButton`  
+`- - - - - >span.title`  
+`- - - - - >div.closeButton`  
+`- - - - >div.paneControls`  
+`- - - - - >div`  
+`- - >div.tabContent (has the class 'visible' if it is active)`  
