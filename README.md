@@ -14,7 +14,7 @@ Use `const {...} = useTabFunctions()` from anywhere within the `TabSystemProvide
 You can drag and drop tabs to reorder them. A tab will keep its state if it stays at the same index throughout changes. Any tab movements that reorder that tab or move it a cross a pane will destroy state. I am hoping to solve this soon!
 
 ### Styling:
-If you wanna change the styling, the CSS class layout looks like this:
+The TabView and all of the panes/tabs come pre-styled, but if you'd like to change the styling, the CSS class layout looks like this:
 
 `div.tabView`  
 `- >div.pane`  
