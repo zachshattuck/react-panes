@@ -11,7 +11,7 @@ Wrap your `<TabView />` and any usages of `useTabFunctions()` in the `TabSystemP
 
 Use `const {...} = useTabFunctions()` from anywhere within the `TabSystemProvider` to get access to control functions. The available controls are `addTab(component, title)`, `addTabAndFocus(component, title)`, and `addTabToNewPane(component, title)`. There will be more coming.
 
-You can drag and drop tabs to reorder them. A tab will keep its state if it stays at the same index throughout changes. Any tab movements that reorder that tab or move it a cross a pane will destroy state. I am hoping to solve this soon
+You can drag and drop tabs to reorder them. A tab will keep its state if it stays at the same index throughout changes. Any tab movements that reorder that tab or move it a cross a pane will destroy state. I am hoping to solve this soon!
 
 ### Styling:
 If you wanna change the styling, the CSS class layout looks like this:
