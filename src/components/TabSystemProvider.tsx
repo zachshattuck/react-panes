@@ -56,7 +56,7 @@ import { TabType, PaneType, NewTab } from "../types"
     setPanes([...panes.slice(0, paneId), ...panes.slice(paneId + 1)])
   }
 
-  const addTab = (paneId: number, tabObject: NewTab[]) => {
+  const addTab = (paneId: number, tabObject: NewTab) => {
     setPanes(cv => [
       ...cv.slice(0, paneId), 
       { ...cv[paneId], tabs: [...cv[paneId].tabs, {...tabObject, key: v4()}] } as PaneType, 

@@ -10,7 +10,7 @@ export type TabSystemContext = {
   removePane: (id: number) => void
   focusedPane: number
   focusPane: (id: number) => void
-  addTab: (paneId: number, tab: NewTab) => void
+  addTab: (paneId: number, tabObject: NewTab) => void
   removeTab: (paneId: number, tabId: number) => void
   moveTab: (paneId: number, originalIndex: number, newIndex: number) => void
   moveTabBetweenPanes: (sourcePaneId: number, sourceTabId: number, destinationPaneId: number, destinationTabId?: number) => void
