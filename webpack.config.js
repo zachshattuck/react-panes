@@ -3,7 +3,7 @@ const nodeExternals = require('webpack-node-externals')
 const pkg = require('./package.json')
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./src/index.ts",
     externalsPresets: { node: true },
     externals: [nodeExternals(), { 'react': 'React', 'react-dom': 'ReactDOM'}],
     output: {
@@ -12,7 +12,7 @@ module.exports = {
       libraryTarget: 'umd',
     },
     resolve: {
-      extensions: ['', '.js', '.jsx'],
+      extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
       // alias: {
       //   react: path.resolve('./node_modules/react')
       // }
@@ -25,7 +25,7 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(ts|tsx|js|jsx)$/,
           exclude: /node_modules/,
           use: {
             loader: "babel-loader"

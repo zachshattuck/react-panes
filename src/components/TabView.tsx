@@ -9,7 +9,7 @@ import { topState, Pane, PaneStateProvider } from "../hooks/useTabs"
   const { panes } = useContext(topState)
   return(<div className="tabView">
 
-    {panes.map((pane, i) => 
+    {panes.map((_pane, i) => 
       <PaneStateProvider key={i} id={i}>
         <Pane width={100/panes.length} />
       </PaneStateProvider>

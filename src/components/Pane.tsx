@@ -2,6 +2,9 @@ import { Add, Close } from "@material-ui/icons"
 import React, { useContext } from "react"
 import { paneState, topState, Tab } from "../hooks/useTabs"
 
+type ClickEvent = React.MouseEvent<HTMLDivElement, MouseEvent>
+type DragEvent = React.DragEvent<HTMLDivElement>
+
 /**
  * Only used by useTabs.
  * @returns 
@@ -11,28 +14,28 @@ export const Pane = ({width = 100}) => {
   const {id, tabs, removeTab, activeTab, setActiveTab} = useContext(paneState)
   const {addPaneAfter, removePane, focusedPane, focusPane, moveTab, moveTabBetweenPanes} = useContext(topState)
   
-  const handleClose = (e, i) => {
+  const handleClose = (e: ClickEvent, i: number) => {
     e.stopPropagation()
     removeTab(i)
   }
-  const handleClick = (e, i) => {
+  const handleClick = (e: ClickEvent, i: number) => {
     setActiveTab(i)
   }
 
-  const handlePaneAdd = e => {
+  const handlePaneAdd = (e: ClickEvent) => {
     e.stopPropagation()
     addPaneAfter(id, [])
   }
-  const handlePaneClose = (e) => {
+  const handlePaneClose = (e: ClickEvent) => {
     e.stopPropagation()
     removePane(id)
   }
 
-  const handleTabButtonDrag = (e, tabId) => {
+  const handleTabButtonDrag = (e: DragEvent, tabId: number) => {
     e.dataTransfer.setData("tab", JSON.stringify({tabId, paneId: id}))
   }
 
-  const handleEndDrop = e => {
+  const handleEndDrop = (e: DragEvent) => {
     //TODO: Make this check for a link or component drop :)
     const { tabId, paneId } = JSON.parse(e.dataTransfer.getData("tab")) 
 
@@ -46,7 +49,7 @@ export const Pane = ({width = 100}) => {
     moveTabBetweenPanes(paneId, tabId, id)
   }
 
-  const handleTabDrop = (e, i) => {
+  const handleTabDrop = (e: DragEvent, i: number) => {
     e.stopPropagation()
 
     //TODO: Make this check for a link or component drop :)
@@ -62,12 +65,12 @@ export const Pane = ({width = 100}) => {
     moveTabBetweenPanes(paneId, tabId, id, i)
   }
 
-  const handleTabDrag = e => {
+  const handleTabDrag = (e: DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
     console.log("tab hover")
   }
-  const handlePaneDrag = e => {
+  const handlePaneDrag = (e: DragEvent) => {
     e.preventDefault()
     console.log("pane drag")
   }
