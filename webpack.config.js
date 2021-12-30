@@ -1,11 +1,19 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals')
-const pkg = require('./package.json')
 
 module.exports = {
     entry: "./src/index.ts",
     externalsPresets: { node: true },
-    externals: [nodeExternals(), { 'react': 'React', 'react-dom': 'ReactDOM'}],
+    externals: [nodeExternals(), { 'react': {
+        root: 'React',
+        commonjs: 'react',
+        commonjs2: 'react'
+      }, 'react-dom': {
+        root: 'ReactDOM',
+        commonjs: 'react-dom',
+        commonjs2: 'react-dom'
+      }
+    }],
     output: {
       path: path.resolve(__dirname, 'lib'),
       filename: "index.js",
@@ -13,15 +21,7 @@ module.exports = {
     },
     resolve: {
       extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
-      // alias: {
-      //   react: path.resolve('./node_modules/react')
-      // }
     },
-    // externals: {
-    //   // Use external version of React and React DOM
-    //   'react': 'react',
-    //   'react-dom': 'react-dom'
-    // },
     module: {
       rules: [
         {

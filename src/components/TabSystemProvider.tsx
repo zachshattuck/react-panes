@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from "react"
+import React, { useState, ReactNode, useReducer } from "react"
 import { v4 } from "uuid"
 
 import { topState } from "../hooks/useTabs"
@@ -12,6 +12,7 @@ import { TabType, PaneType, NewTab } from "../types"
  * @returns 
  */
  export const TabSystemProvider = ({initialTabs = [], children}: { initialTabs: NewTab[], children: ReactNode }) => {
+  const [_, forceRerender] = useReducer((state: number) => state + 1, 0)
 
   const [panes, setPanes] = useState<PaneType[]>([{
     tabs: initialTabs.map(tab => ({...tab, key: v4() })),
@@ -86,100 +87,15 @@ import { TabType, PaneType, NewTab } from "../types"
     ])
   }
   const moveTabBetweenPanes = (sourcePaneId: number, sourceTabId: number, destinationPaneId: number, destinationTabId: number = -1) => {
+    const sourcePane = panes[sourcePaneId]
+    const [movingTab] = sourcePane.tabs.splice(sourceTabId, 1)
+    const destinationPane = panes[destinationPaneId]
 
-    //WARNING: painful React nested array mutations incoming
-    const getNewTabList = (list: TabType[] = panes[destinationPaneId].tabs) => destinationTabId !== -1
-      ? [ ...list.slice(0, destinationTabId), panes[sourcePaneId].tabs[sourceTabId], ...list.slice(destinationTabId) ] 
-      : [ ...list, panes[sourcePaneId].tabs[sourceTabId]]
+    const destinationIndex = destinationTabId === -1 ? destinationPane.tabs.length : destinationTabId
 
-      // type PaneJoinTable = {
-      //   tabId: string// uuid,
-      //   paneIndex: number,
-      //   tabIndex: number
-      // }
-      // type TabNew = {
-      //   title: string,
-      //   content: JSX.Element
-      // }
+    destinationPane.tabs.splice(destinationIndex, 0, movingTab)
 
-      // // pane hash
-
-      // type State = {
-      //   tabs: { [key: string]: TabNew }
-      // }
-      
-    if(sourcePaneId < destinationPaneId) {
-
-      setPanes([
-        //Up until the source pane...
-        ...panes.slice(0, sourcePaneId), 
-
-        //Copy of the source pane, but with the source tab cut out of the array and activeTab adjusted accordingly
-        { 
-          ...panes[sourcePaneId], 
-          tabs: [
-            ...panes[sourcePaneId].tabs.slice(0, sourceTabId), 
-            ...panes[sourcePaneId].tabs.slice(sourceTabId + 1)
-          ],
-          activeTab: panes[sourcePaneId].activeTab > 0 ? ( panes[sourcePaneId].activeTab === panes[sourcePaneId].tabs.length - 1 ? panes[sourcePaneId].activeTab - 1 : panes[sourcePaneId].activeTab ) : 0
-        }, 
-
-        //Right after the source pane right up until the destination pane
-        ...panes.slice(sourcePaneId + 1, destinationPaneId),
-
-        //Copy of the destination pane with the source tab appended onto its tab list or inserted appropriately, and focus the new tab
-        {
-          ...panes[destinationPaneId],
-          //Is there a destination tab specified?
-          tabs: getNewTabList(),
-          //not length - 1, because the destination does not technically have the tab yet
-          activeTab: destinationTabId !== -1 ? destinationTabId : panes[destinationPaneId].tabs.length,
-        },
-
-        //Right after the destionation pane onward
-        ...panes.slice(destinationPaneId + 1)
-      ])
-
-    } else {
-
-      setPanes([
-        //Right up until the destination pane...
-        ...panes.slice(0, destinationPaneId), 
-
-        //Copy of the destination pane with the source tab appended onto its tab list or inserted appropriately, and focus the new tab
-        {
-          ...panes[destinationPaneId],
-          //Is there a destination tab specified?
-          tabs: destinationTabId !== -1 ? [
-            ...panes[destinationPaneId].tabs.slice(0, destinationTabId),
-            panes[sourcePaneId].tabs[sourceTabId],
-            ...panes[destinationPaneId].tabs.slice(destinationTabId)                  
-          ]
-          //Otherwise, just pop it in at the end   
-          : [...panes[destinationPaneId].tabs, panes[sourcePaneId].tabs[sourceTabId]],
-
-          //not length - 1, because the destination does not technically have the tab yet
-          activeTab: destinationTabId !== -1 ? destinationTabId : panes[destinationPaneId].tabs.length,
-        },
-
-        //Right after the destination pane up until the source pane...
-        ...panes.slice(destinationPaneId + 1, sourcePaneId),
-
-        //Copy of the source pane with the source tab cut out of the array, and activeTab adjusted accordingly
-        { 
-          ...panes[sourcePaneId], 
-          tabs: [
-            ...panes[sourcePaneId].tabs.slice(0, sourceTabId),
-            ...panes[sourcePaneId].tabs.slice(sourceTabId + 1)
-          ],
-          activeTab: panes[sourcePaneId].activeTab > 0 ? ( panes[sourcePaneId].activeTab === panes[sourcePaneId].tabs.length - 1 ? panes[sourcePaneId].activeTab - 1 : panes[sourcePaneId].activeTab ) : 0
-        }, 
-
-        //Right after the sourcePane onward
-        ...panes.slice(sourcePaneId + 1)
-      ])
-
-    }
+    forceRerender()
   }
   const moveTab = (paneId: number, originalIndex: number, newIndex: number) => {
 

@@ -4,13 +4,12 @@
   "description": "A very simple panes-and-tabs system for React.",
   "main": "lib/index.js",
   "files": [
-    "lib/index.js",
-    "lib/index.d.ts",
+    "lib",
     "README"
   ],
   "scripts": {
     "build": "webpack --mode=production",
-    "generate-types": "tsc --declaration --noEmit false --emitDeclarationOnly --outFile ./lib/index.js --isolatedModules false && node ./fix-types.js",
+    "generate-types": "tsc --declaration --noEmit false --emitDeclarationOnly && node ./fix-types.js",
     "prepack": "npm run build && npm run generate-types"
   },
   "keywords": [
