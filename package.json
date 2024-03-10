@@ -8,6 +8,10 @@
     "lib/index.d.ts",
     "README"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachshattuck/react-tabs-system.git"
+  },
   "scripts": {
     "build": "webpack --mode=production",
     "generate-types": "tsc --declaration --noEmit false --emitDeclarationOnly --outFile ./lib/index.js --isolatedModules false && node ./fix-types.js",
